@@ -1,4 +1,9 @@
 <!--
+====================================================================
+ README - mortalité-enfants-tchad-mics6
+====================================================================
+-->
+
 <h1 align="center">Déterminants de la mortalité des enfants de moins de cinq ans au Tchad</h1>
 
 <p align="center"><b>Analyse design-based des données d'enquête MICS6 (2019) : logit pondéré et modèle multiniveau à effets aléatoires provinciaux, entièrement reproductible sous R.</b></p>
