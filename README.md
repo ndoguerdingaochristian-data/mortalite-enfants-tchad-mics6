@@ -1,11 +1,4 @@
 <!--
-====================================================================
- README - mortalité-enfants-tchad-mics6
- Projet R, adapte de votre mémoire / article en preparation.
- RAPPEL : ne jamais versionner les données MICS6 (licence UNICEF).
-====================================================================
--->
-
 <h1 align="center">Déterminants de la mortalité des enfants de moins de cinq ans au Tchad</h1>
 
 <p align="center"><b>Analyse design-based des données d'enquête MICS6 (2019) : logit pondéré et modèle multiniveau à effets aléatoires provinciaux, entièrement reproductible sous R.</b></p>
@@ -14,7 +7,6 @@
   <img src="https://img.shields.io/badge/R-0F1E2E?style=for-the-badge&logo=r&logoColor=white" alt="R" />
   <img src="https://img.shields.io/badge/Donn%C3%A9es_d'enqu%C3%AAte-0E7C7B?style=for-the-badge" alt="Données d'enquête" />
   <img src="https://img.shields.io/badge/%C3%89conom%C3%A9trie-0F1E2E?style=for-the-badge" alt="Économétrie" />
-  <img src="https://img.shields.io/badge/Statut-Termin%C3%A9-2E9E5B?style=for-the-badge" alt="Statut" />
 </p>
 
 <p align="center">
