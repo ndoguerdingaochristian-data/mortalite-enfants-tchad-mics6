@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "Si vous utilisez ce travail, merci de le citer comme ci-dessous."
+title: "Déterminants de la mortalité des enfants de moins de cinq ans au Tchad (MICS6 2019)"
+abstract: "Analyse design-based (logit pondéré et modèle multiniveau a effets aléatoires provinciaux) des déterminants de la mortalité infanto-juvenile au Tchad. Travail de recherche issu d'un mémoire de Master en Économie et Gestion appliquées, option Mathématiques Appliquées aux Sciences Sociales (MASS), Université de Yaoundé II, 2024, non publie."
+type: software
+authors:
+  - family-names: "Ndoguerdingao"
+    given-names: "Christian"
+    email: "ndoguerdingaochristian@gmail.com"
+year: 2024
+url: "https://github.com/ndoguerdingaochristian-data/mortalité-enfants-tchad-mics6"
+license: MIT
+keywords:
+  - "mortalité infantile"
+  - "MICS6"
+  - "Tchad"
+  - "économétrie"
+  - "données d'enquête"
+  - "modèle multiniveau"
