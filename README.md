@@ -12,13 +12,14 @@
   <img src="https://img.shields.io/badge/R-0F1E2E?style=for-the-badge&logo=r&logoColor=white" alt="R" />
   <img src="https://img.shields.io/badge/Donn%C3%A9es_d'enqu%C3%AAte-0E7C7B?style=for-the-badge" alt="Données d'enquête" />
   <img src="https://img.shields.io/badge/%C3%89conom%C3%A9trie-0F1E2E?style=for-the-badge" alt="Économétrie" />
+  <img src="https://img.shields.io/badge/Statut-Termin%C3%A9-2E9E5B?style=for-the-badge" alt="Statut" />
 </p>
 
 <p align="center">
   <a href="#en-bref">En bref</a> ·
-  <a href="#le-probleme">Problème</a> ·
+  <a href="#le-problème">Problème</a> ·
   <a href="#les-données">Données</a> ·
-  <a href="#la-demarche">Démarche</a> ·
+  <a href="#la-démarche">Démarche</a> ·
   <a href="#les-résultats">Résultats</a> ·
   <a href="#reproduire">Reproduire</a>
 </p>
@@ -38,7 +39,7 @@
 > [!IMPORTANT]
 > Les données MICS6 appartiennent à l'UNICEF et sont sous licence. Elles ne sont **pas** incluses dans ce dépôt. Voir [`data/README.md`](./data/README.md) pour les obtenir gratuitement.
 
-## Le probleme
+## Le problème
 
 Au Tchad, la mortalité des moins de cinq ans reste parmi les plus élevées au monde. Réduire ce fardeau suppose de comprendre ses déterminants, mais deux difficultés se posent : les données d'enquête ont un plan de sondage complexe (strates, grappes, pondérations) qu'on ne peut ignorer sans biaiser les résultats, et les provinces présentent des disparités fortes qu'un modèle standard ne capte pas. Ce projet répond aux deux.
 
@@ -56,11 +57,11 @@ Le cadre théorique mobilisé est celui des déterminants proches de Mosley et C
 | **Unité d'analyse** | Enfants nés 0-59 mois avant l'enquête |
 | **Pondérations** | Poids femmes, avec grappe (PSU) et strate déclarées |
 
-## La demarche
+## La démarche
 
 ```mermaid
 flowchart TD
-    A["Données MICS6 2019<br/>naissances, femmes, menages"] --> B["Preparation<br/>variables, suppression listwise"]
+    A["Données MICS6 2019<br/>naissances, femmes, ménages"] --> B["Préparation<br/>variables, suppression listwise"]
     B --> C["Plan de sondage<br/>strates, grappes, poids"]
     C --> D["Descriptif design-based<br/>prévalence, tests de Rao-Scott"]
     C --> E["Logit pondéré<br/>M1 distaux puis M2 complet"]
@@ -90,7 +91,7 @@ La prévalence pondérée du décès avant cinq ans est de **10,1 %** (IC 95 % :
 Le logit pondéré fait ressortir des effets nets, cohérents avec la littérature :
 
 - **Naissance multiple** : très forte surmortalité (OR de survie 0,26 ; IC 0,21-0,34).
-- **Parité et intervalle** : les premières naissances survivent bien mieux que les naissances de rang élevé (OR 1,49) ; a parité élevée, un intervalle court aggrave encore le risque (OR 0,59 vs intervalle long).
+- **Parité et intervalle** : les premières naissances survivent bien mieux que les naissances de rang élevé (OR 1,49) ; à parité élevée, un intervalle court aggrave encore le risque (OR 0,59 vs intervalle long).
 - **Sexe** : les filles survivent mieux que les garçons (OR 1,18).
 - **Éducation de la mère** : le niveau secondaire ou plus est protecteur (OR 1,26).
 - **Statut matrimonial** : hors union, la survie est plus faible.
@@ -129,7 +130,7 @@ Les résultats R ont été recoupés avec une estimation design-based indépenda
 - Agir sur l'espacement des naissances, déterminant proche modifiable, via la planification familiale.
 - Renforcer le suivi périnatal des grossesses multiples, à très haut risque.
 
-## Ce que le projet demontre
+## Ce que le projet démontre
 
 - Maîtrise du **plan de sondage complexe** et de l'inférence design-based (Rao-Scott, erreurs-types corrigées).
 - **Économétrie appliquée** : logit pondéré, modèle multiniveau, test de Mundlak.
@@ -147,20 +148,24 @@ Les résultats R ont été recoupés avec une estimation design-based indépenda
 ## Structure du dépôt
 
 ```
-mortalité-enfants-tchad-mics6/
-├── README.md
-├── LICENSE · .gitignore
+mortalite-enfants-tchad-mics6/
+├── README.md · LICENSE · CHANGELOG.md · CITATION.cff · .gitignore
+├── analyse_complete.R      # point d'entrée : lance tout le pipeline
 ├── data/
-│   ├── README.md          # comment obtenir MICS6 (données non versionnées)
-│   └── raw/               # y placer bh.dta, wm.dta, hh.dta, ch.dta
+│   ├── README.md           # comment obtenir MICS6 (données non versionnées)
+│   └── raw/                # y placer bh.dta, wm.dta, hh.dta, ch.dta
 ├── R/
+│   ├── 00_packages.R
 │   ├── 01_preparation.R
 │   ├── 02_plan_sondage_descriptif.R
 │   ├── 03_logit_pondere.R
-│   └── 04_multiniveau.R
+│   ├── 04_multiniveau.R
+│   ├── 05_gof_archer_lemeshow.R
+│   ├── 06_figures.R
+│   └── 07_tableaux.R
 └── outputs/
-    ├── tables/            # odds ratios, tests
-    └── figures/
+    ├── tables/             # odds ratios, effets marginaux, tests (RTF + CSV)
+    └── figures/            # forest plot, mortalite et effets par province
 ```
 
 ## Reproduire
@@ -174,7 +179,7 @@ source("R/00_packages.R")
 source("analyse_complete.R")
 ```
 
-Les scripts numérotés du dossier `R/` (01 a 07) sont les composants du pipeline, lisibles un a un ; `analyse_complete.R` les enchaine dans l'ordre et produit tout (tables et figures dans `outputs/`).
+Les scripts numérotés du dossier `R/` (01 à 07) sont les composants du pipeline, lisibles un à un ; `analyse_complete.R` les enchaîne dans l'ordre et produit tout (tables et figures dans `outputs/`).
 
 ## Références
 
